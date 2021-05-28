@@ -5,6 +5,6 @@ async def set_default_commands(dp):
     await dp.bot.set_my_commands(
         [
             types.BotCommand("help", "Get help"),
-            types.BotCommand("menu", "Get commands")
+            types.BotCommand("menu", "Get available commands")
         ]
     )
