@@ -13,6 +13,7 @@ async def show_menu(message: types.Message):
 
 @dp.callback_query_handler(text='when')
 async def when(call: CallbackQuery):
+
     await call.answer('Вы не дежурите в этом месяце')
 
 @dp.callback_query_handler(text='who_now')
