@@ -1,7 +1,6 @@
-from func.base import month_name
+from ..func.base import month_name
 import datetime
-import pprint
-from data.config import URL_GOOGLE_DOC_DEV, URL_GOOGLE_DOC_SUP
+from ..data.config import URL_GOOGLE_DOC_DEV, URL_GOOGLE_DOC_SUP
 import requests
 import openpyxl
 import io

@@ -4,8 +4,8 @@ import requests
 import io
 import datetime
 
-from data.config import URL_GOOGLE_DOC_DEV, URL_GOOGLE_DOC_SUP
-from func.base import month_name
+from ..data.config import URL_GOOGLE_DOC_DEV, URL_GOOGLE_DOC_SUP
+from ..func.base import month_name
 
 google_doc_dev = None
 google_doc_sup = None

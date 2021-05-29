@@ -3,10 +3,11 @@ from aiogram.dispatcher.filters import Command, Text
 from aiogram.types import ReplyKeyboardRemove, CallbackQuery
 import datetime
 
-from func.base import working_day
-from keyboards.inline.choice_buttons import menu, google_dev_keyboard, google_sup_keyboard, google_time_keyboard
-from loader import dp
+from ...func.base import working_day
+from ...keyboards.inline.choice_buttons import menu, google_dev_keyboard, google_sup_keyboard
+from ...loader import dp
 
+working_day()
 @dp.message_handler(Command("menu"))
 async def show_menu(message: types.Message):
     await message.answer("Выберите команду из меню ниже:", reply_markup=menu)
