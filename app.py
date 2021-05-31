@@ -1,11 +1,13 @@
-from aiogram import executor
+import threading
 
-from func.worker import update_docs
+from aiogram import executor
+import os
+
 from loader import dp
 import middlewares, filters, handlers
 from utils.notify_admins import on_startup_notify
 from utils.set_bot_commands import set_default_commands
-import threading
+
 
 async def on_startup(dispatcher):
     # Устанавливаем дефолтные команды
@@ -16,6 +18,6 @@ async def on_startup(dispatcher):
 
 
 if __name__ == '__main__':
-    _update_doc = threading.Thread(target=update_docs)
-    _update_doc.start()
+    # cache = threading.Thread(target=update_docs)
+    # cache.start()
     executor.start_polling(dp, on_startup=on_startup)

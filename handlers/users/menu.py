@@ -1,11 +1,13 @@
 from aiogram import types
 from aiogram.dispatcher.filters import Command, Text
 from aiogram.types import ReplyKeyboardRemove, CallbackQuery
-import datetime
+import datetime, pprint
 
 from func.base import working_day
+from func.when import get_when
 from keyboards.inline.choice_buttons import menu, google_dev_keyboard, google_sup_keyboard, google_time_keyboard
 from loader import dp
+
 
 @dp.message_handler(Command("menu"))
 async def show_menu(message: types.Message):
@@ -13,16 +15,20 @@ async def show_menu(message: types.Message):
 
 @dp.callback_query_handler(text='when')
 async def when(call: CallbackQuery):
-
-    await call.answer('Вы не дежурите в этом месяце')
+    answer = get_when(call['from']['username'])
+    if answer is None:
+        await call.answer('Вы не дежурите в этом месяце')
+    else:
+        await call.message.answer(text=answer)
 
 @dp.callback_query_handler(text='who_now')
 async def who_duty(call: CallbackQuery):
     if working_day():
         await call.answer(cache_time=60)
-        await call.message.answer('3ЛП: Рабочее время. Смотри ответственного за распределение неотложек внутри команды в этом файле.',reply_markup=google_time_keyboard)
+        await call.message.answer('В рабочее время смотри ответственного за распределение неотложек внутри команды в этом файле.',reply_markup=google_time_keyboard)
     else:
-        pass
+        await call.message.answer(text=who_now())
+
 @dp.callback_query_handler(text='cancel')
 async def cancel(call: CallbackQuery):
     await call.message.edit_reply_markup()
