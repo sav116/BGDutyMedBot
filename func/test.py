@@ -73,12 +73,12 @@ def always():
 
 def get_color():
     now=datetime.datetime.now()
-    response1 = requests.get(URL_GOOGLE_DOC_DEV,stream=True)
-    google_doc_dev = openpyxl.load_workbook(filename=io.BytesIO(response1.content), data_only=True)
+    response1 = requests.get(URL_GOOGLE_DOC_SUP,stream=True)
+    google_doc_sup = openpyxl.load_workbook(filename=io.BytesIO(response1.content), data_only=True)
     list_name = [f"{month_name(now.month)} {now.year}"]
     print(list_name)
-    sheet =google_doc_dev[f"{month_name(now.month)} {now.year}"]
-    cell_obj = sheet.cell(row=1, column=4)
+    sheet =google_doc_sup[f"{month_name(now.month)} {now.year}"]
+    cell_obj = sheet.cell(row=1, column=34)
     color = cell_obj.fill.start_color.index
     value = cell_obj.value
     print(color)

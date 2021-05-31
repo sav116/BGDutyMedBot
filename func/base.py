@@ -76,18 +76,21 @@ def update_sup_dict(doc):
     return technical_support
 
 def update_docs():
-    GOOGLE_DEV = None
-    GOOGLE_SUP = None
     response1 = requests.get(
         URL_GOOGLE_DOC_DEV,
         stream=True)
     google_doc_dev = openpyxl.load_workbook(filename=io.BytesIO(response1.content), data_only=True)
     DATA_DEV = update_dev_dict(google_doc_dev)
+    print("DATA_DEV:")
+    print(DATA_DEV)
+
     response2 = requests.get(
         URL_GOOGLE_DOC_SUP,
         stream=True)
     google_doc_sup = openpyxl.load_workbook(filename=io.BytesIO(response2.content), data_only=True)
     DATA_SUP = update_sup_dict(google_doc_sup)
+    print("DATA_SUP:")
+    print(DATA_SUP)
     return google_doc_dev, google_doc_sup, DATA_DEV, DATA_SUP
 
 def month_name(month):
