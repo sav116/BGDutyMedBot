@@ -1,7 +1,6 @@
 from aiogram import types
 from aiogram.dispatcher.filters import Command, Text
 from aiogram.types import ReplyKeyboardRemove, CallbackQuery
-import datetime, pprint
 
 from func.base import working_day
 from func.when import get_when

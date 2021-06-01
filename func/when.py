@@ -47,12 +47,22 @@ def get_when(username):
     now = datetime.datetime.now()
     sheet_dev_next_month = None
     sheet_sup_next_month = None
+    DATA_DEV = {}
+    DATA_SUP = {}
     try:
         GOOGLE_DEV, GOOGLE_SUP, DATA_DEV, DATA_SUP = update_docs()
-        sheet_dev = GOOGLE_DEV[f"{month_name(now.month)} {now.year}"] # Open boock sheet
+         # Open boock sheet
         sheet_sup = GOOGLE_SUP[f"{month_name(now.month)} {now.year}"]
     except:
-        return 'Something went wrong'
+        return "Не могу получить google doc или обновить данные сотрудников"
+    try:
+        sheet_dev = GOOGLE_DEV[f"{month_name(now.month)} {now.year}"]
+    except:
+        return f"Не могу открыть книгу разработчиков с названием '{month_name(now.month)} {now.year}'"
+    try:
+        sheet_sup = GOOGLE_SUP[f"{month_name(now.month)} {now.year}"]
+    except:
+        return f"Не могу открыть книгу техподдержки с названием '{month_name(now.month)} {now.year}'"
     try:
         sheet_dev_next_month = GOOGLE_DEV[f"{month_name(now.month+1)} {now.year}"] # Open boock sheet on next month
     except:
