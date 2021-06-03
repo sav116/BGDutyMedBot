@@ -12,22 +12,32 @@ from loader import dp
 async def show_menu(message: types.Message):
     await message.answer("Выберите команду из меню ниже:", reply_markup=menu)
 
-@dp.callback_query_handler(text='when')
-async def when(call: CallbackQuery):
-    answer = get_when(call['from']['username'])
-    #answer = get_when('RomanRudnyh')
-    if answer is None:
-        await call.answer('Вы не дежурите в этом месяце')
-    else:
-        await call.message.answer(text=answer)
-
-@dp.callback_query_handler(text='who_now')
+@dp.callback_query_handler(text='who_now_sup')
 async def who_duty(call: CallbackQuery):
     if working_day():
         await call.answer(cache_time=60)
         await call.message.answer('В рабочее время смотри ответственного за распределение неотложек внутри команды в этом файле.',reply_markup=google_time_keyboard)
     else:
+        # answer = who_duty_dev()
         await call.message.answer(text="В нерабочее время функция еще не реализована")
+
+@dp.callback_query_handler(text='who_now_dev')
+async def who_duty(call: CallbackQuery):
+    if working_day():
+        await call.answer(cache_time=60)
+        await call.message.answer('В рабочее время смотри ответственного за распределение неотложек внутри команды в этом файле.',reply_markup=google_time_keyboard)
+    else:
+        # answer =
+        await call.message.answer(text="В нерабочее время функция еще не реализована")
+
+@dp.callback_query_handler(text='when')
+async def when(call: CallbackQuery):
+    answer = get_when(call['from']['username'])
+    #answer = get_when('abyanov')
+    if answer is None:
+        await call.answer('Вы не дежурите в этом месяце')
+    else:
+        await call.message.answer(text=answer)
 
 @dp.callback_query_handler(text='cancel')
 async def cancel(call: CallbackQuery):

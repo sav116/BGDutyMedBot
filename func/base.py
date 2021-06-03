@@ -29,7 +29,7 @@ def update_dev_dict(doc):
     try:
         sheet_dev = doc[f"{month_name(now.month)} {now.year}"]
     except:
-        return "Can't open book's sheet"
+        return None
     for i in range(15, 140):
         cell_fio=sheet_dev.cell(row=i, column=2).value # колонка с фио
         cell_phone=sheet_dev.cell(row=i, column=3).value
@@ -60,7 +60,7 @@ def update_sup_dict(doc):
     try:
         sheet_sup = doc[f"{month_name(now.month)} {now.year}"]
     except:
-        return "Can't open book's sheet"
+        return None
     for i in range(15, 40):
         cell_fio=sheet_sup.cell(row=i, column=2).value
         cell_phone=sheet_sup.cell(row=i, column=3).value
@@ -75,23 +75,68 @@ def update_sup_dict(doc):
                 }
     return technical_support
 
-def update_docs():
-    response1 = requests.get(
-        URL_GOOGLE_DOC_DEV,
-        stream=True)
-    google_doc_dev = openpyxl.load_workbook(filename=io.BytesIO(response1.content), data_only=True)
-    DATA_DEV = update_dev_dict(google_doc_dev)
-    print("DATA_DEV:")
-    print(DATA_DEV)
+def _download_docs():
 
-    response2 = requests.get(
-        URL_GOOGLE_DOC_SUP,
-        stream=True)
-    google_doc_sup = openpyxl.load_workbook(filename=io.BytesIO(response2.content), data_only=True)
-    DATA_SUP = update_sup_dict(google_doc_sup)
-    print("DATA_SUP:")
-    print(DATA_SUP)
-    return google_doc_dev, google_doc_sup, DATA_DEV, DATA_SUP
+    _GOOGLE_DEV = None
+    _GOOGLE_SUP = None
+
+    _DATA_DEV = None
+    _DATA_SUP = None
+
+    _GOOGLE_DEV_SHEET_CUR_MONTH = None
+    _GOOGLE_DEV_SHEET_NEXT_MONTH = None
+
+    _GOOGLE_SUP_SHEET_CUR_MONTH = None
+    _GOOGLE_SUP_SHEET_NEXT_MONTH = None
+
+    now = datetime.datetime.now()
+
+    try:
+        # Пытаемся открыть гугл док с разработчиками (3 линия) и обновить данные сотрудников
+        response1 = requests.get(
+            URL_GOOGLE_DOC_DEV,
+            stream=True)
+        _GOOGLE_DEV = openpyxl.load_workbook(filename=io.BytesIO(response1.content), data_only=True)
+        _DATA_DEV = update_dev_dict(_GOOGLE_DEV)
+    except:
+        print("Не открыть гугл док с разработчиками (3 линия) и обновить данные сотрудников")
+
+    try:
+        # Пытаемся открыть книгу с разработчиками, актуальную в данный момент
+        _GOOGLE_DEV_SHEET_CUR_MONTH = _GOOGLE_DEV[f"{month_name(now.month)} {now.year}"]
+    except:
+        print("Не могу открыть книгу с разработчиками, актуальную в данный момент")
+
+    try:
+        # Пытаемся открыть гугл док с техподдержкой (1 линия) и обновить данные сотрудников
+        response2 = requests.get(
+            URL_GOOGLE_DOC_SUP,
+            stream=True)
+        _GOOGLE_SUP = openpyxl.load_workbook(filename=io.BytesIO(response2.content), data_only=True)
+        _DATA_SUP = update_sup_dict(_GOOGLE_SUP)
+    except:
+        print("Не удалось открыть гугл док с техподдержкой (1 линия) и обновить данные сотрудников")
+
+    try:
+        # Пытаемся открыть открыть книгу с техподдержкой актуальную в данный момент
+        _GOOGLE_SUP_SHEET_CUR_MONTH = _GOOGLE_SUP[f"{month_name(now.month)} {now.year}"]
+    except:
+        print("Не удалось открыть открыть книгу с техподдержкой, актуальную в данный момент")
+
+    try:
+        # Пытаемся открыть книгу с разработчиками, на следующий месяц
+        _GOOGLE_DEV_SHEET_NEXT_MONTH = _GOOGLE_DEV[f"{month_name(now.month+1)} {now.year}"]
+    except:
+        print("Не удалось открыть книгу с разработчиками, на следующий месяц")
+
+    try:
+        # Пытаемся открыть открыть книгу с техподдержкой на следующий месяц
+        _GOOGLE_SUP_SHEET_NEXT_MONTH = _GOOGLE_SUP[f"{month_name(now.month+1)} {now.year}"]
+    except:
+        print("Не удалось открыть открыть книгу с техподдержкой на следующий месяц")
+
+
+    return _GOOGLE_DEV, _GOOGLE_SUP, _DATA_DEV, _DATA_SUP, _GOOGLE_DEV_SHEET_CUR_MONTH, _GOOGLE_DEV_SHEET_NEXT_MONTH, _GOOGLE_SUP_SHEET_CUR_MONTH, _GOOGLE_SUP_SHEET_NEXT_MONTH
 
 def month_name(month):
     months = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь']

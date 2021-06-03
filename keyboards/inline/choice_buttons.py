@@ -4,26 +4,32 @@ menu = InlineKeyboardMarkup(row_width=1,
     inline_keyboard=[
         [
             InlineKeyboardButton(
+                text='Дежурный 1 линии',
+                callback_data='who_now_sup'
+            )
+        ],
+        [
+            InlineKeyboardButton(
+                text='Дежурный 3 линии',
+                callback_data='who_now_dev'
+            )
+        ],
+        [
+            InlineKeyboardButton(
                 text='Когда я дежурю',
                 callback_data='when'
             )
         ],
         [
             InlineKeyboardButton(
-                text='Кто сейчас дежурный',
-                callback_data='who_now'
-            )
-        ],
-        [
-            InlineKeyboardButton(
-                text='График разработчиков',
-                callback_data='google_dev'
-            )
-        ],
-        [
-            InlineKeyboardButton(
-                text='График 1 линия',
+                text='График 1 линии',
                 callback_data='google_sup'
+            )
+        ],
+        [
+            InlineKeyboardButton(
+                text='График 3 линии',
+                callback_data='google_dev'
             )
         ],
         [
