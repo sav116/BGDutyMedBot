@@ -78,13 +78,14 @@ def get_color():
     list_name = [f"{month_name(now.month)} {now.year}"]
     print(list_name)
     sheet =google_doc_sup[f"{month_name(now.month)} {now.year}"]
-    cell_obj = sheet.cell(row=1, column=34)
+    cell_obj = sheet.cell(row=4, column=4)
     color = cell_obj.fill.start_color.index
     value = cell_obj.value
     print(color)
     print(value)
     print(type(value))
-
+    # print(now.date())
+    # print(now.date()==value.date())
 if __name__ == '__main__':
     get_color()
     # always()

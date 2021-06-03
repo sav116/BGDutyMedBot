@@ -2,8 +2,9 @@ from aiogram import types
 from aiogram.dispatcher.filters import Command, Text
 from aiogram.types import ReplyKeyboardRemove, CallbackQuery
 
-from func.base import working_day
+from func.base import working_day_sup, working_day_dev, vladivostoc_time_sup
 from func.when import get_when
+from func.who import who_duty_sup
 from keyboards.inline.choice_buttons import menu, google_dev_keyboard, google_sup_keyboard, google_time_keyboard
 from loader import dp
 
@@ -14,16 +15,20 @@ async def show_menu(message: types.Message):
 
 @dp.callback_query_handler(text='who_now_sup')
 async def who_duty(call: CallbackQuery):
-    if working_day():
+    if working_day_sup():
         await call.answer(cache_time=60)
         await call.message.answer('В рабочее время смотри ответственного за распределение неотложек внутри команды в этом файле.',reply_markup=google_time_keyboard)
+    elif vladivostoc_time_sup():
+        await call.answer(cache_time=60)
+        await call.message.answer(text="Нет дежурных. Рабочее время Владивостока")
     else:
         # answer = who_duty_dev()
-        await call.message.answer(text="В нерабочее время функция еще не реализована")
+        answer = who_duty_sup()
+        await call.message.answer(text=answer)
 
 @dp.callback_query_handler(text='who_now_dev')
 async def who_duty(call: CallbackQuery):
-    if working_day():
+    if working_day_dev():
         await call.answer(cache_time=60)
         await call.message.answer('В рабочее время смотри ответственного за распределение неотложек внутри команды в этом файле.',reply_markup=google_time_keyboard)
     else:

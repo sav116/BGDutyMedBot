@@ -149,10 +149,50 @@ def max_day_of_month(any_day):
     next_month = any_day.replace(day=28) + datetime.timedelta(days=4)  # this will never fail
     return next_month - datetime.timedelta(days=next_month.day)
 
-def working_day():
-    start_work_day = datetime.time(9, 00, 00)
+def vladivostoc_time_sup():
+    start_work_day = datetime.time(00, 00, 00)
+    end_work_day = datetime.time(8, 00, 00)
+    now = datetime.datetime.now()
+    if now.weekday() < 5 and start_work_day <= now.time() <= end_work_day:
+        return True
+    return False
+
+def working_day_sup():
+    start_work_day = datetime.time(8, 00, 00)
     end_work_day = datetime.time(18,00,00)
     now = datetime.datetime.now()
     if now.weekday() < 5 and start_work_day <= now.time() <= end_work_day:
         return True
     return False
+
+def working_day_dev():
+    start_work_day = datetime.time(5, 00, 00)
+    end_work_day = datetime.time(18, 00, 00)
+    now = datetime.datetime.now()
+    if now.weekday() < 5 and start_work_day <= now.time() <= end_work_day:
+        return True
+    return False
+
+def not_working_time_weekdays():
+    start_work_day = datetime.time(18, 00, 00)
+    end_work_day = datetime.time(00, 00, 00)
+    now = datetime.datetime.now()
+    if now.weekday() < 5 and start_work_day <= now.time() <= end_work_day:
+        return True
+    return False
+
+def day_off():
+    now = datetime.datetime.now()
+    if now.weekday() > 4:
+        return True
+    return False
+
+def get_nic_telegramm(fio, sheet):
+    if ',' not in fio:
+        for row in range(18, 45):
+            if isinstance(sheet.cell(row=row, column=4).value, str) and isinstance(sheet.cell(row=row, column=2).value, str):
+                cell_nick_value = sheet.cell(row=row, column=4).value.strip()
+                cell_fio_value = sheet.cell(row=row, column=2).value.strip()
+                if fio == cell_fio_value:
+                    return cell_nick_value
+    return None
