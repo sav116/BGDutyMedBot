@@ -4,7 +4,7 @@ import time
 from aiogram import executor
 import os
 
-from loader import dp, download_docs, DATA_DEV, DATA_SUP, _download_docs, GOOGLE_SUP
+from loader import dp, DATA_DEV, DATA_SUP
 import middlewares, filters, handlers
 from utils.notify_admins import on_startup_notify
 from utils.set_bot_commands import set_default_commands
@@ -17,14 +17,11 @@ async def on_startup(dispatcher):
     # Уведомляет про запуск
     await on_startup_notify(dispatcher)
 
+
 def printer():
     print(f"DATA_DEV:\n{DATA_DEV}\n")
     print(f"DATA_SUP:\n{DATA_SUP}\n")
 
+
 if __name__ == '__main__':
-    #_download_docs()
-    # printer()
-    # time.sleep(3)
-    # print('call finc')
-    # print(GOOGLE_SUP)
     executor.start_polling(dp, on_startup=on_startup)

@@ -1,17 +1,19 @@
 import openpyxl, io, requests, datetime
 from data.config import URL_GOOGLE_DOC_DEV, URL_GOOGLE_DOC_SUP
 
+
 def get_weekday(day):
-    weekdays_dict={
-        0:'Понедельник',
-        1:'Вторник',
-        2:'Среда',
-        3:'Четверг',
-        4:'Пятница',
-        5:'Суббота',
-        6:'Воскресенье'
+    weekdays_dict = {
+        0: 'Понедельник',
+        1: 'Вторник',
+        2: 'Среда',
+        3: 'Четверг',
+        4: 'Пятница',
+        5: 'Суббота',
+        6: 'Воскресенье'
     }
     return weekdays_dict[day]
+
 
 def update_dev_dict(doc):
     """
@@ -24,25 +26,29 @@ def update_dev_dict(doc):
                 }
         }
         """
-    now=datetime.datetime.now()
-    developers={}
+    now = datetime.datetime.now()
+    developers = {}
     try:
         sheet_dev = doc[f"{month_name(now.month)} {now.year}"]
     except:
         return None
     for i in range(15, 140):
-        cell_fio=sheet_dev.cell(row=i, column=2).value # колонка с фио
-        cell_phone=sheet_dev.cell(row=i, column=3).value
-        cell_nick=sheet_dev.cell(row=i, column=4).value
-        cell_timezone=sheet_dev.cell(row=i, column=6).value
+        cell_fio = sheet_dev.cell(row=i, column=2).value  # колонка с фио
+        cell_phone = sheet_dev.cell(row=i, column=3).value
+        cell_nick = sheet_dev.cell(row=i, column=4).value
+        cell_timezone = sheet_dev.cell(row=i, column=6).value
+        cell_direction = sheet_dev.cell(row=i, column=7).value
+
         if isinstance(cell_nick, str):
             if cell_nick.strip().startswith('@'):
-                developers[cell_nick.strip()]={
+                developers[cell_nick.strip()] = {
                     'phone': str(cell_phone).strip(),
                     'fio': str(cell_fio).strip(),
-                    'timezone': str(cell_timezone).strip()
+                    'timezone': str(cell_timezone).strip(),
+                    'direction': str(cell_direction).strip()
                 }
     return developers
+
 
 def update_sup_dict(doc):
     """
@@ -56,27 +62,27 @@ def update_sup_dict(doc):
         }
         """
     now = datetime.datetime.now()
-    technical_support={}
+    technical_support = {}
     try:
         sheet_sup = doc[f"{month_name(now.month)} {now.year}"]
     except:
         return None
     for i in range(15, 40):
-        cell_fio=sheet_sup.cell(row=i, column=2).value
-        cell_phone=sheet_sup.cell(row=i, column=3).value
-        cell_nick=sheet_sup.cell(row=i, column=4).value
-        cell_timezone=sheet_sup.cell(row=i, column=6).value
+        cell_fio = sheet_sup.cell(row=i, column=2).value
+        cell_phone = sheet_sup.cell(row=i, column=3).value
+        cell_nick = sheet_sup.cell(row=i, column=4).value
+        cell_timezone = sheet_sup.cell(row=i, column=6).value
         if isinstance(cell_nick, str):
             if cell_nick.strip().startswith('@'):
-                technical_support[cell_nick.strip()]={
+                technical_support[cell_nick.strip()] = {
                     'phone': str(cell_phone).strip(),
                     'fio': str(cell_fio).strip(),
                     'timezone': str(cell_timezone).strip()
                 }
     return technical_support
 
-def _download_docs():
 
+def _download_docs():
     _GOOGLE_DEV = None
     _GOOGLE_SUP = None
 
@@ -125,29 +131,32 @@ def _download_docs():
 
     try:
         # Пытаемся открыть книгу с разработчиками, на следующий месяц
-        _GOOGLE_DEV_SHEET_NEXT_MONTH = _GOOGLE_DEV[f"{month_name(now.month+1)} {now.year}"]
+        _GOOGLE_DEV_SHEET_NEXT_MONTH = _GOOGLE_DEV[f"{month_name(now.month + 1)} {now.year}"]
     except:
         print("Не удалось открыть книгу с разработчиками, на следующий месяц")
 
     try:
         # Пытаемся открыть открыть книгу с техподдержкой на следующий месяц
-        _GOOGLE_SUP_SHEET_NEXT_MONTH = _GOOGLE_SUP[f"{month_name(now.month+1)} {now.year}"]
+        _GOOGLE_SUP_SHEET_NEXT_MONTH = _GOOGLE_SUP[f"{month_name(now.month + 1)} {now.year}"]
     except:
         print("Не удалось открыть открыть книгу с техподдержкой на следующий месяц")
 
-
     return _GOOGLE_DEV, _GOOGLE_SUP, _DATA_DEV, _DATA_SUP, _GOOGLE_DEV_SHEET_CUR_MONTH, _GOOGLE_DEV_SHEET_NEXT_MONTH, _GOOGLE_SUP_SHEET_CUR_MONTH, _GOOGLE_SUP_SHEET_NEXT_MONTH
 
+
 def month_name(month):
-    months = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь']
+    months = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь',
+              'Декабрь']
     if (0 < month < 13):
-        return months[month -1]
+        return months[month - 1]
     else:
         return "====bad month==="
+
 
 def max_day_of_month(any_day):
     next_month = any_day.replace(day=28) + datetime.timedelta(days=4)  # this will never fail
     return next_month - datetime.timedelta(days=next_month.day)
+
 
 def vladivostoc_time_sup():
     start_work_day = datetime.time(00, 00, 00)
@@ -157,13 +166,15 @@ def vladivostoc_time_sup():
         return True
     return False
 
+
 def working_day_sup():
     start_work_day = datetime.time(8, 00, 00)
-    end_work_day = datetime.time(18,00,00)
+    end_work_day = datetime.time(18, 00, 00)
     now = datetime.datetime.now()
     if now.weekday() < 5 and start_work_day <= now.time() <= end_work_day:
         return True
     return False
+
 
 def working_day_dev():
     start_work_day = datetime.time(5, 00, 00)
@@ -173,6 +184,7 @@ def working_day_dev():
         return True
     return False
 
+
 def not_working_time_weekdays():
     start_work_day = datetime.time(18, 00, 00)
     end_work_day = datetime.time(00, 00, 00)
@@ -181,18 +193,41 @@ def not_working_time_weekdays():
         return True
     return False
 
+
 def day_off():
     now = datetime.datetime.now()
     if now.weekday() > 4:
         return True
     return False
 
+
+def day_off_dev():
+    from loader import GOOGLE_DEV_SHEET_CUR_MONTH
+    now = datetime.datetime.now()
+    if now.weekday() > 4 or GOOGLE_DEV_SHEET_CUR_MONTH.cell(row=1, column=now.day + 3) == "FFFFE599":
+        return True
+    return False
+
+
 def get_nic_telegramm(fio, sheet):
     if ',' not in fio:
         for row in range(18, 45):
-            if isinstance(sheet.cell(row=row, column=4).value, str) and isinstance(sheet.cell(row=row, column=2).value, str):
+            if isinstance(sheet.cell(row=row, column=4).value, str) and isinstance(sheet.cell(row=row, column=2).value,
+                                                                                   str):
                 cell_nick_value = sheet.cell(row=row, column=4).value.strip()
                 cell_fio_value = sheet.cell(row=row, column=2).value.strip()
                 if fio == cell_fio_value:
                     return cell_nick_value
+    return None
+
+
+def get_nic_telegramm_dev(fio, sheet):
+    for row in range(40, 130):
+        cell_2_value = sheet.cell(row=row, column=2).value
+        cell_4_value = sheet.cell(row=row, column=4).value
+        if isinstance(cell_2_value, str) and isinstance(cell_4_value, str):
+            cell_nick_value = sheet.cell(row=row, column=4).value.strip()
+            cell_fio_value = sheet.cell(row=row, column=2).value.strip()
+            if fio == cell_fio_value:
+                return cell_nick_value
     return None
