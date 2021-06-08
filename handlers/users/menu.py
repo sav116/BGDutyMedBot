@@ -14,6 +14,11 @@ async def show_menu(message: types.Message):
     await message.answer("Выберите команду из меню ниже:", reply_markup=menu)
 
 
+@dp.message_handler()
+async def close(message: types.Message):
+    if message.text == "/update":
+        await quit()
+
 @dp.callback_query_handler(text='who_now_sup')
 async def who_duty(call: CallbackQuery):
     if day_off():
