@@ -8,6 +8,6 @@ bot = Bot(token=config.BOT_TOKEN, parse_mode=types.ParseMode.HTML)
 storage = MemoryStorage()
 dp = Dispatcher(bot, storage=storage)
 
-scheduler = AsyncIOScheduler()
+# scheduler = AsyncIOScheduler()
 
 GOOGLE_DEV, GOOGLE_SUP, DATA_DEV, DATA_SUP, GOOGLE_DEV_SHEET_CUR_MONTH, GOOGLE_DEV_SHEET_NEXT_MONTH, GOOGLE_SUP_SHEET_CUR_MONTH, GOOGLE_SUP_SHEET_NEXT_MONTH = _download_docs()
