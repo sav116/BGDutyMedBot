@@ -51,7 +51,12 @@ GOOGLE_SUP_LINK = "https://docs.google.com/spreadsheets/d/1ow4emdGPrva66CP__TIc1
 google_sup_link = InlineKeyboardButton(text='График тут', url=GOOGLE_SUP_LINK)
 google_sup_keyboard.insert(google_sup_link)
 
-google_time_keyboard = InlineKeyboardMarkup()
-GOOGLE_WORK_LINK = "https://docs.google.com/spreadsheets/d/1ow4emdGPrva66CP__TIc1IFGnLay-_ZSvL54fGOB1cY/edit#gid=614226428"
-google_work_link = InlineKeyboardButton(text='Файл тут', url=GOOGLE_WORK_LINK)
-google_time_keyboard.insert(google_work_link)
+google_time_keyboard_sup = InlineKeyboardMarkup()
+GOOGLE_WORK_LINK_SUP = "https://docs.google.com/spreadsheets/d/1ow4emdGPrva66CP__TIc1IFGnLay-_ZSvL54fGOB1cY/edit#gid=614226428"
+google_work_link = InlineKeyboardButton(text='Файл тут', url=GOOGLE_WORK_LINK_SUP)
+google_time_keyboard_sup.insert(google_work_link)
+
+google_time_keyboard_dev = InlineKeyboardMarkup()
+GOOGLE_WORK_LINK_DEV = "https://docs.google.com/spreadsheets/d/1EQVeV3LAqXPh7U24CBXmlpD9xt8n4B_nHMYDGgbs3HI/edit#gid=150891771"
+google_work_link = InlineKeyboardButton(text='Файл тут', url=GOOGLE_WORK_LINK_DEV)
+google_time_keyboard_dev.insert(google_work_link)
