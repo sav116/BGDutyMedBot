@@ -52,6 +52,6 @@ google_sup_link = InlineKeyboardButton(text='График тут', url=GOOGLE_SU
 google_sup_keyboard.insert(google_sup_link)
 
 google_time_keyboard = InlineKeyboardMarkup()
-GOOGLE_WORK_LINK = "https://docs.google.com/spreadsheets/d/1EQVeV3LAqXPh7U24CBXmlpD9xt8n4B_nHMYDGgbs3HI/edit#gid=150891771"
+GOOGLE_WORK_LINK = "https://docs.google.com/spreadsheets/d/1ow4emdGPrva66CP__TIc1IFGnLay-_ZSvL54fGOB1cY/edit#gid=614226428"
 google_work_link = InlineKeyboardButton(text='Файл тут', url=GOOGLE_WORK_LINK)
 google_time_keyboard.insert(google_work_link)
