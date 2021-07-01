@@ -1,3 +1,5 @@
+import sys
+
 from aiogram import types
 from aiogram.dispatcher.filters import Command, Text
 from aiogram.types import ReplyKeyboardRemove, CallbackQuery
@@ -17,7 +19,7 @@ async def show_menu(message: types.Message):
 
 @dp.message_handler(Command("update"))
 async def close():
-        quit()
+    await sys.exit()
 
 @dp.callback_query_handler(text='who_now_sup')
 async def who_duty(call: CallbackQuery):
