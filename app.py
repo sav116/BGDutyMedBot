@@ -11,7 +11,6 @@ from utils.set_bot_commands import set_default_commands
 
 
 async def on_startup(dispatcher):
-    # test
     # Устанавливаем дефолтные команды
     await set_default_commands(dispatcher)
 
