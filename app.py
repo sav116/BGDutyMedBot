@@ -19,7 +19,6 @@ async def on_startup(dispatcher):
 
 
 def printer():
-    # test
     # print congigs
     print(f"DATA_DEV:\n{DATA_DEV}\n")
     print(f"DATA_SUP:\n{DATA_SUP}\n")
