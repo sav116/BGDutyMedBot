@@ -76,7 +76,6 @@ def who_duty_sup_weekday():
                 pass
             if color == "FF0000FF" and parse_mode:
                 duty_fio = GOOGLE_SUP_SHEET_CUR_MONTH.cell(row=row, column=2).value.strip()
-                print(duty_fio)
                 surname = duty_fio.split()[0]
                 first_name = duty_fio.split()[1]
                 duty_nick = get_nic_telegramm(surname, GOOGLE_SUP_SHEET_CUR_MONTH)
