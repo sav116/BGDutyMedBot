@@ -1,3 +1,5 @@
+import sys
+
 from aiogram import types
 from aiogram.dispatcher.filters import Command, Text
 from aiogram.types import ReplyKeyboardRemove, CallbackQuery
@@ -16,10 +18,16 @@ async def show_menu(message: types.Message):
     await message.answer("Выберите команду из меню ниже:", reply_markup=menu)
 
 
+<<<<<<< HEAD
 @dp.message_handler(Command("update"))
 async def close(message: types.Message):
     os.system('supervisorctl restart telebot')
 
+=======
+# @dp.message_handler(Command("update"))
+# async def update():
+#     await sys.exit()
+>>>>>>> 80fad2f571092d1f9eb6d734345c74fd15bd7619
 
 @dp.callback_query_handler(text='who_now_sup')
 async def who_duty(call: CallbackQuery):

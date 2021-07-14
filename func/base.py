@@ -105,13 +105,13 @@ def _download_docs():
         _GOOGLE_DEV = openpyxl.load_workbook(filename=io.BytesIO(response1.content), data_only=True)
         _DATA_DEV = update_dev_dict(_GOOGLE_DEV)
     except:
-        print("Не открыть гугл док с разработчиками (3 линия) и обновить данные сотрудников")
+        print("Не удалось открыть гугл док с разработчиками (3 линия) и обновить данные сотрудников")
 
     try:
         # Пытаемся открыть книгу с разработчиками, актуальную в данный момент
         _GOOGLE_DEV_SHEET_CUR_MONTH = _GOOGLE_DEV[f"{month_name(now.month)} {now.year}"]
     except:
-        print("Не могу открыть книгу с разработчиками, актуальную в данный момент")
+        print("Не удалось открыть книгу с разработчиками, актуальную в данный момент")
 
     try:
         # Пытаемся открыть гугл док с техподдержкой (1 линия) и обновить данные сотрудников
