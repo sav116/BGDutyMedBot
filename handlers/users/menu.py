@@ -8,6 +8,7 @@ from func.when import get_when
 from func.who import who_duty_sup_weekday, who_duty_sup_dayoff, who_duty_dev
 from keyboards.inline.choice_buttons import menu, google_dev_keyboard, google_sup_keyboard, google_time_keyboard_sup, google_time_keyboard_dev
 from loader import dp
+import os
 
 
 @dp.message_handler(Command("menu"))
@@ -15,10 +16,9 @@ async def show_menu(message: types.Message):
     await message.answer("Выберите команду из меню ниже:", reply_markup=menu)
 
 
-# @dp.message_handler(Command("update"))
-# async def close(message: types.Message):
-#     if str(message["from"]["id"]) in ADMINS:
-#         quit()
+@dp.message_handler(Command("update"))
+async def close(message: types.Message):
+    os.system('supervisorctl restart telebot')
 
 
 @dp.callback_query_handler(text='who_now_sup')

@@ -20,7 +20,7 @@ def get_color():
     list_name = [f"{month_name(now.month)} {now.year}"]
     print(list_name)
     sheet =google_doc_sup[f"{month_name(now.month)} {now.year}"]
-    cell_obj = sheet.cell(row=58, column=4)
+    cell_obj = sheet.cell(row=13, column=4)
     color = cell_obj.fill.start_color.index
     value = cell_obj.value
     print(color)
