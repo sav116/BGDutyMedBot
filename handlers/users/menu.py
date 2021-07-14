@@ -1,11 +1,8 @@
-import sys
-
 from aiogram import types
-from aiogram.dispatcher.filters import Command, Text
-from aiogram.types import ReplyKeyboardRemove, CallbackQuery
+from aiogram.dispatcher.filters import Command
+from aiogram.types import CallbackQuery
 
-from data.config import ADMINS
-from func.base import working_day_sup, working_day_dev, vladivostoc_time_sup, day_off, day_off_dev, restart
+from func.base import working_day_sup, working_day_dev, vladivostoc_time_sup, day_off, day_off_dev
 from func.when import get_when
 from func.who import who_duty_sup_weekday, who_duty_sup_dayoff, who_duty_dev
 from keyboards.inline.choice_buttons import menu, google_dev_keyboard, google_sup_keyboard, google_time_keyboard_sup, google_time_keyboard_dev
