@@ -20,8 +20,8 @@ async def show_menu(message: types.Message):
 
 @dp.message_handler(Command("update"))
 async def close(message: types.Message):
-    os.system('supervisorctl restart telebot')
     await message.answer("Выполняю перезапуск!")
+    os.system('supervisorctl restart telebot')
 
 @dp.callback_query_handler(text='who_now_sup')
 async def who_duty(call: CallbackQuery):
