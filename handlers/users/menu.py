@@ -1,7 +1,8 @@
 from aiogram import types
-from aiogram.dispatcher.filters import Command
-from aiogram.types import CallbackQuery
+from aiogram.dispatcher.filters import Command, Text
+from aiogram.types import ReplyKeyboardRemove, CallbackQuery
 
+from data.config import ADMINS
 from func.base import working_day_sup, working_day_dev, vladivostoc_time_sup, day_off, day_off_dev
 from func.when import get_when
 from func.who import who_duty_sup_weekday, who_duty_sup_dayoff, who_duty_dev
@@ -19,6 +20,7 @@ async def show_menu(message: types.Message):
 async def close(message: types.Message):
     await message.delete()
     os.system('supervisorctl restart telebot')
+
 
 @dp.callback_query_handler(text='who_now_sup')
 async def who_duty(call: CallbackQuery):

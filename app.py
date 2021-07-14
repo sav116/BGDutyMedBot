@@ -1,6 +1,11 @@
+import threading
+import time
+
 from aiogram import executor
+import os
 
 from loader import dp, DATA_DEV, DATA_SUP
+import middlewares, filters, handlers
 from utils.notify_admins import on_startup_notify
 from utils.set_bot_commands import set_default_commands
 
