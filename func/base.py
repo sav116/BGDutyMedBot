@@ -209,25 +209,22 @@ def day_off_dev():
     return False
 
 
-def get_nic_telegramm(fio, sheet):
-    if ',' not in fio:
-        for row in range(18, 45):
-            if isinstance(sheet.cell(row=row, column=4).value, str) and isinstance(sheet.cell(row=row, column=2).value,
-                                                                                   str):
-                cell_nick_value = sheet.cell(row=row, column=4).value.strip()
-                cell_fio_value = sheet.cell(row=row, column=2).value.strip()
-                if fio == cell_fio_value:
-                    return cell_nick_value
+def get_nic_telegramm(surname, sheet):
+    for row in range(18, 45):
+        if isinstance(sheet.cell(row=row, column=2).value, str):
+            cell_nick_value = sheet.cell(row=row, column=4).value
+            cell_fio_value = sheet.cell(row=row, column=2).value.strip()
+            if surname in cell_fio_value:
+                return cell_nick_value
     return None
 
 
-def get_nic_telegramm_dev(fio, sheet):
+def get_nic_telegramm_dev(surname, sheet):
     for row in range(40, 130):
         cell_2_value = sheet.cell(row=row, column=2).value
-        cell_4_value = sheet.cell(row=row, column=4).value
-        if isinstance(cell_2_value, str) and isinstance(cell_4_value, str):
-            cell_nick_value = sheet.cell(row=row, column=4).value.strip()
+        if isinstance(cell_2_value, str):
+            cell_nick_value = sheet.cell(row=row, column=4).value
             cell_fio_value = sheet.cell(row=row, column=2).value.strip()
-            if fio == cell_fio_value:
+            if surname in cell_fio_value:
                 return cell_nick_value
     return None
